@@ -1,24 +1,10 @@
-# README
+# Sawir Forum
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Sawir Forum application works to provide a good experience with how people interact in forums.
 
-Things you may want to cover:
+Sawir Forums lets you do these:
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+1. Create new inspiring articles.
+2. Comments other people's articles and share your thoughts.
+3. Follow other people
+4. Favorite other articles. Consider it a bookmark
