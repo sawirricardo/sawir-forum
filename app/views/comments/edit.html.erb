@@ -1,3 +1,7 @@
+<%= content_for :head do %>
+  <title>Edit Comment for <%= @article.title %> | Sawir Forum</title>
+  <meta name="description" content="Awesome forum where you can share awesoem ideas, thoughts, and so on.">
+<% end %>
 <div>
   <div class="max-w-3xl mx-auto p-8">
     <% flash.each do |key,value| %>

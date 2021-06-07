@@ -6,11 +6,13 @@ class ArticlesController < ApplicationController
     @articles = Article.includes(:tags, :user,
                                  :favoriters).where(tags: { name: params[:tag] }).order(created_at: :desc).all
     @tags = Tag.all
+    @title = 'Popular articles | Sawir Forum'
   end
 
   def new
     @article = Article.new
     @tags = Tag.includes(:articles).all.sort_by { |tag| tag.articles.length }.reverse!
+    @title = 'Create new article | Sawir Forum'
   end
 
   def create
@@ -31,6 +33,7 @@ class ArticlesController < ApplicationController
     else
       @tags = Tag.all
       flash.now[:error] = 'Something went wrong'
+      @title = 'Create new article | Sawir Forum'
       render :new
     end
   end
@@ -38,11 +41,13 @@ class ArticlesController < ApplicationController
   def show
     @article = Article.includes(:user, :comments, :tags).where(slug: params[:slug]).first!
     @comment = Comment.new
+    @title = "#{@article.title} | Sawir Forum"
   end
 
   def edit
     @article = Article.includes(:tags).where(slug: params[:slug]).first
     @tags = Tag.includes(:articles).all.sort_by { |tag| tag.articles.length }.reverse!
+    @title = "Edit #{@article.title} | Sawir Forum"
   end
 
   def update
@@ -63,6 +68,8 @@ class ArticlesController < ApplicationController
     else
       @tags = Tag.all
       flash.now[:error] = 'Something went wrong'
+      @title = "Edit #{@article.title} | Sawir Forum"
+
       render :edit
     end
   end

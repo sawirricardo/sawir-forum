@@ -14,6 +14,7 @@ class CommentsController < ApplicationController
 
   def edit
     @article = Article.find_by(slug: params[:slug])
+    @title = "Edit comment #{@article.title} | Sawir Forum"
     @comment = @article.comments.find(params[:comment_id])
   end
 
@@ -24,6 +25,7 @@ class CommentsController < ApplicationController
       redirect_to article_path(article.slug), notice: 'Successfully edited your comment.'
     else
       flash[:error] = 'Something went wrong. Failed to edit your comment.'
+      @title = "Edit comment #{@article.title} | Sawir Forum"
       redirect_to article_path(article.slug)
     end
   end

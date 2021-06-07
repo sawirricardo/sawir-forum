@@ -1,3 +1,7 @@
+<%= content_for :head do %>
+  <title><%= @article.title %> | Sawir Forum</title>
+  <meta name="description" content="Awesome forum where you can share awesoem ideas, thoughts, and so on.">
+<% end %>
 <div>
   <div class="bg-gray-200">
     <div class="max-w-5xl mx-auto py-8 px-4 md:px-0">
@@ -66,7 +70,7 @@
         </div>
       <% end %>
       <% unless logged_in? %>
-        <div class="bg-gray-100 p-2 text-center">
+        <div class="bg-gray-100 p-2 text-center rounded-md">
           You need to <%= link_to 'log in', session_path,class:"text-blue-400 hover:text-blue-800 font-bold" %> to comment
         </div>
       <% end %>
@@ -91,8 +95,11 @@
           <% end %>
         </div>
       <% end %>
+      <h4 class="text-2xl font-bold">Comments (<%= @article.comments.length %>)</h4>
+      <% if @article.comments.empty? %>
+        <div class="text-gray-600">No comments yet...</div>
+      <% end %>
       <% unless @article.comments.empty? %>
-        <h4 class="text-2xl font-bold">Comments (<%= @article.comments.length %>)</h4>
         <div class="space-y-2">
           <% @article.comments.each do |comment| %>
             <div>

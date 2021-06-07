@@ -3,6 +3,7 @@ class SessionsController < ApplicationController
   before_action :authenticate_guest, except: [:destroy]
 
   def new
+    @title = 'Log in | Sawir Forum'
     @user = User.new
   end
 
@@ -13,6 +14,8 @@ class SessionsController < ApplicationController
       redirect_to root_path
     else
       flash.now[:error] = 'Wrong email or password'
+      @title = 'Log in | Sawir Forum'
+
       render :new
     end
   end

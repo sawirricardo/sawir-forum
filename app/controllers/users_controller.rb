@@ -4,6 +4,7 @@ class UsersController < ApplicationController
 
   def new
     @user = User.new
+    @title = 'Sign up | Sawir Forum'
   end
 
   def create
@@ -14,12 +15,14 @@ class UsersController < ApplicationController
       redirect_to session_path
     else
       flash[:error] = 'Something went wrong'
+      @title = 'Sign up | Sawir Forum'
       render :new
     end
   end
 
   def edit
     @user = current_user
+    @title = 'My setting | Sawir Forum'
   end
 
   def update
@@ -34,6 +37,7 @@ class UsersController < ApplicationController
       redirect_back(fallback_location: edit_user_path, notice: 'Settings saved!')
     else
       flash.now[:error] = 'Something went wrong! Your settings has not been saved yet!'
+      @title = 'My setting | Sawir Forum'
       render :edit
     end
   end
