@@ -41,13 +41,12 @@ class ArticlesController < ApplicationController
   def show
     @article = Article.includes(:user, :comments, :tags).where(slug: params[:slug]).first!
     @comment = Comment.new
-    @title = "#{@article.title} | Sawir Forum"
   end
 
   def edit
     @article = Article.includes(:tags).where(slug: params[:slug]).first
     @tags = Tag.includes(:articles).all.sort_by { |tag| tag.articles.length }.reverse!
-    @title = "Edit #{@article.title} | Sawir Forum"
+    redirect_to article_path(@article.slug) unless @article.user.id == current_user.id
   end
 
   def update
@@ -75,10 +74,11 @@ class ArticlesController < ApplicationController
   end
 
   def destroy
-    @article = Article.find_by(slug: params[:slug])
+    @article = current_user.articles.find_by(slug: params[:slug])
     if @article.destroy
       redirect_to root_path
     else
+      flash[:error] = 'Something went wrong!'
       redirect_back(fallback_location: article_path(@article.slug))
     end
   end

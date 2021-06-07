@@ -14,13 +14,16 @@ class CommentsController < ApplicationController
 
   def edit
     @article = Article.find_by(slug: params[:slug])
-    @title = "Edit comment #{@article.title} | Sawir Forum"
     @comment = @article.comments.find(params[:comment_id])
+    redirect_to article_path(@article.slug) unless @comment.user.id == current_user.id
   end
 
   def update
     article = Article.find_by(slug: params[:slug])
     comment = article.comments.find(params[:comment_id])
+
+    redirect_to article_path(@article.slug) unless comment.user.id == current_user.id
+
     if comment.update(body: params[:comment][:body])
       redirect_to article_path(article.slug), notice: 'Successfully edited your comment.'
     else
