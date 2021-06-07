@@ -1,0 +1,20 @@
+<div>
+  <div class="max-w-3xl mx-auto p-8">
+    <% flash.each do |key,value| %>
+      <% if key == 'error' %>
+        <div class="bg-red-100 border-red-500 border text-red-500 px-4 py-2 text-xs"><%= value %></div>
+      <% end %>
+      <% if key == 'notice' %>
+        <div class="bg-green-100 border-green-500 border text-green-500 px-4 py-2 text-xs"><%= value %></div>
+      <% end %>
+    <% end %>
+    <h1 class="text-center font-bold">Sign up</h1>
+    <div class="text-center"><%= link_to 'Have an account?', session_path,class:"text-gray-400 hover:text-gray-800" %></div>
+    <%= form_with model: @user, url:users_path,class:"space-y-4" do |f|%>
+      <%= f.text_field :name,placeholder:'Username', class:'border border-gray-300 rounded-md px-4 py-2 block w-full'%>
+      <%= f.email_field :email,placeholder:'Email', class:'border border-gray-300 rounded-md px-4 py-2 block w-full'%>
+      <%= f.password_field :password,placeholder:'Password', class:'border border-gray-300 rounded-md px-4 py-2 block w-full'%>
+      <div class="flex justify-end"><%= f.submit "Register", class:'bg-gray-200 hover:bg-gray-400 px-4 py-2 text-center cursor-pointer rounded-md' %></div>
+    <% end %>
+  </div>
+</div>

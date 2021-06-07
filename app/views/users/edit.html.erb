@@ -1,0 +1,26 @@
+<div>
+  <div class="max-w-3xl mx-auto px-4 md:px-0 py-8">
+    <% flash.each do |key,value| %>
+      <% if key == 'error' %>
+        <div class="bg-red-100 border-red-500 border text-red-500 px-4 py-2 text-xs"><%= value %></div>
+      <% end %>
+      <% if key == 'notice' %>
+        <div class="bg-green-100 border-green-500 border text-green-500 px-4 py-2 text-xs"><%= value %></div>
+      <% end %>
+    <% end %>
+    <h1 class="text-center text-2xl font-bold">Setting</h1>
+    <div class="mt-4">
+      <%= form_with model:@user, url:users_path,method: :patch,class:"space-y-4" do |f| %>
+        <%= f.text_field :image,placeholder:"Image URL", class:"px-4 py-2 border border-gray-300 rounded-md block w-full"%>
+        <%= f.text_area :bio,placeholder:"Tell a bit about yourself...",class:"px-4 py-2 border border-gray-300 rounded-md block w-full" %>
+        <%= f.text_field :name,placeholder:"Username", class:"px-4 py-2 border border-gray-300 rounded-md block w-full"%>
+        <%= f.email_field :email,placeholder:"Email", class:"px-4 py-2 border border-gray-300 rounded-md block w-full"%>
+        <%= f.password_field :password,placeholder:"New Password", class:"px-4 py-2 border border-gray-300 rounded-md block w-full"%>
+        <div class="flex justify-end space-x-2">
+          <%= link_to 'Log out', session_path,method: :delete, class:"px-4 py-2 rounded-md border border-red-500 text-red-500 hover:bg-red-500 hover:text-white cursor-pointer" %>
+          <%= f.submit "Update Setting",class:"px-4 py-2 rounded-md bg-gray-100 hover:bg-gray-300 cursor-pointer" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

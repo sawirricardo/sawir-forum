@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tailwindcss/typography@0.4.1/dist/typography.min.css" integrity="sha256-Xxn/RmOEU63MeoONufwgAmCmNVOxkzQJyP604j/3QqU=" crossorigin="anonymous">
+    <style>
+      @import url('https://rsms.me/inter/inter.css');
+      html { font-family: 'Inter', sans-serif; }
+      @supports (font-variation-settings: normal) {
+        html { font-family: 'Inter var', sans-serif; }
+      }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <title><%= @seo_title||= "Sawir Forum" %></title>
+    <meta name="description" content="<%= @seo_content ||= "Awesome forum where you can find interesting things, stuffs, and so on."%>">
+    <%= yield :head%>
+  </head>
+  <body class="antialiased">
+    <div class="min-h-screen flex flex-col">
+      <header>
+        <nav class="bg-gray-100 px-4 py-2">
+          <div class="max-w-5xl mx-auto flex justify-between">
+            <%= link_to 'Sawir Forum', root_path,class:"font-bold uppercase block inline-block w-32" %>
+            <ul class="flex space-x-4">
+              <li><%= link_to 'Home', root_path, class:'text-gray-400 hover:text-gray-800 text-xs md:text-base' %></li>
+              <% if logged_in? %>
+                <li><%= link_to 'New Article', new_article_path, class:'text-gray-400 hover:text-gray-800 text-xs md:text-base' %></li>
+                <li><%= link_to 'Setting', edit_user_path, class:'text-gray-400 hover:text-gray-800 text-xs md:text-base' %></li>
+                <li><%= link_to current_user.name, profile_path(current_user.name),class:"text-gray-400 hover:text-gray-800 text-xs md:text-base" %></li>
+              <% end %>
+              <% unless logged_in? %>
+                <li><%= link_to "Register", new_user_path,class:"text-gray-400 hover:text-gray-800 text-xs md:text-base" %></li>
+                <li><%= link_to "Login", session_path,class:"text-gray-400 hover:text-gray-800 text-xs md:text-base" %></li>
+              <% end %>
+            </ul>
+          </div>
+        </nav>
+      </header>
+      <%= yield %>
+      <div class="flex-grow"></div>
+      <footer>
+        <div class="bg-gray-100 py-2 px-4">
+          <div class="max-w-3xl mx-auto">
+            <p>
+              <%= Time.zone.now.year %>.
+              <%= link_to 'Ricardo Sawir', "https://ricardo.sawirstudio.com",class:"text-gray-600 hover:text-gray-800",target:"_blank" %>.
+            </p>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>

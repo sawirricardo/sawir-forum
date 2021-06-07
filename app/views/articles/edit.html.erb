@@ -1,0 +1,38 @@
+<div>
+  <div class="max-w-5xl mx-auto px-4 py-8 md:px-0">
+    <% flash.each do |key,value| %>
+      <% if key == 'error' %>
+        <div class="bg-red-100 border-red-500 border text-red-500 px-4 py-2 text-xs"><%= value %></div>
+      <% end %>
+      <% if key == 'notice' %>
+        <div class="bg-green-100 border-green-500 border text-green-500 px-4 py-2 text-xs"><%= value %></div>
+      <% end %>
+    <% end %>
+    <h1>Edit Article</h1>
+    <div class="mt-4">
+      <%=form_with model:@article, url:article_path(@article.slug),class:"space-y-4" do|f|%>
+        <%=  f.text_field :title,placeholder:"Title",class:"block w-full border border-gray-300 px-4 py-2 rounded-md" %>
+        <%= f.text_field :description,placeholder:"What's this article about?",class:"block w-full border border-gray-300 px-4 py-2 rounded-md" %>
+        <%= f.text_area :body,placeholder:"Write your article (in markdown)",class:"block w-full border border-gray-300 px-4 py-2 rounded-md" %>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+        <select id="tags_selector" name="article[tags][]" class="w-full block" multiple="multiple">
+          <% @tags.each do |tag| %>
+            <option value="<%= tag.name %>"
+            <% if @article.tags.any? {|article_tag| article_tag.id == tag.id} %>
+              selected="selected"
+            <% end %>
+            ><%= "#{tag.name} - #{tag.articles.length}" %></option>
+          <% end %>
+        </select>
+        <script>
+          $(document).on('turbolinks:load', function() {
+                $('#tags_selector').select2({tags:true});
+          })
+        </script>
+        <div class="flex justify-end"><%= f.submit "Publish Article", class:'bg-gray-200 hover:bg-gray-400 px-4 py-2 text-center cursor-pointer rounded-md' %></div>
+      <% end %>
+    </div>
+  </div>
+</div>

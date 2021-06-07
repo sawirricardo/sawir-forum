@@ -1,0 +1,80 @@
+<div>
+  <div class="bg-gray-200">
+    <div class="max-w-3xl mx-auto p-8 text-center">
+      <%= image_tag @profile.image,class:'bg-gray-300 w-24 h-24 rounded-full mx-auto' %>
+      <h1 class="font-bold text-2xl"><%= @profile.name %></h1>
+      <p><%= @profile.bio %></p>
+      <% if logged_in? && current_user.id != @profile.id %>
+        <% if @profile.followers.any?{|follower| follower.follower_id == current_user.id} %>
+          <%= link_to "Unfollow #{@profile.name}", follower_path(@profile.name),method: :delete,class:"px-4 py-2 text-xs border border-gray-300 inline-block mt-4" %>
+        <% else %>
+          <%= link_to "Follow #{@profile.name}", follower_path(@profile.name),method: :post,class:"px-4 py-2 text-xs border border-gray-300 inline-block mt-4" %>
+        <% end %>
+      <% end %>
+      <div>
+      </div>
+    </div>
+  </div>
+  <div class="max-w-5xl mx-auto p-8">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <div class>
+        <h3 class="text-xl font-bold">Favorited Articles</h3>
+        <div class="border-b border-gray-300 my-4"></div>
+        <% if @profile.favorites.empty? %>
+          <div class="text-center">This author has not favorited any article yet</div>
+        <% end %>
+        <% unless @profile.favorites.empty? %>
+          <div class="space-y-8">
+            <% @profile.favorites.each do |article| %>
+              <div class="">
+                <div class="flex items-center space-x-2">
+                  <%= link_to profile_path(article.user.name) do %>
+                    <%= image_tag article.user.image,class:"w-8 h-8 rounded-full" %>
+                  <% end %>
+                  <div class="">
+                    <%= link_to article.user.name, profile_path(article.user.name),class:"text-xs" %>
+                    <div class="text-xs text-gray-600"><%= time_ago_in_words(article.created_at) %></div>
+                  </div>
+                </div>
+                <%= link_to article_path(article.slug) do %>
+                  <h2 class="font-bold"><%= article.title %></h2>
+                  <p><%= article.description %></p>
+                  <span class="mt-4 text-gray-600 text-xs">Read more</span>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+      <div>
+        <h3 class="text-xl font-bold">Published Articles</h3>
+        <div class="border-b border-gray-300 my-4"></div>
+        <% if @profile.articles.empty? %>
+          <div class="text-center">This author has not published any article yet</div>
+        <% end %>
+        <% unless @profile.articles.empty? %>
+          <div class="space-y-8">
+            <% @profile.articles.each do |article| %>
+              <div class="">
+                <div class="flex items-center space-x-2">
+                  <%= link_to profile_path(article.user.name) do %>
+                    <%= image_tag article.user.image,class:"w-8 h-8 rounded-full" %>
+                  <% end %>
+                  <div class="">
+                    <%= link_to article.user.name, profile_path(article.user.name),class:"text-xs" %>
+                    <div class="text-xs text-gray-600"><%= time_ago_in_words(article.created_at) %></div>
+                  </div>
+                </div>
+                <%= link_to article_path(article.slug) do %>
+                  <h2 class="font-bold"><%= article.title %></h2>
+                  <p><%= article.description %></p>
+                  <span class="mt-4 text-gray-600 text-xs">Read more</span>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

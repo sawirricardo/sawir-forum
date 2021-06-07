@@ -1,0 +1,21 @@
+<div>
+  <div class="max-w-3xl mx-auto p-8">
+    <% flash.each do |key,value| %>
+      <% if key == 'error' %>
+        <div class="bg-red-100 border-red-500 border text-red-500 px-4 py-2 text-xs"><%= value %></div>
+      <% end %>
+      <% if key == 'notice' %>
+        <div class="bg-green-100 border-green-500 border text-green-500 px-4 py-2 text-xs"><%= value %></div>
+      <% end %>
+    <% end %>
+    <%=form_with model:@comment, url:comment_path(@article.slug,@comment.id) do |f|%>
+      <%= f.text_area :body,placeholder:"Write a comment...", class:"block w-full border border-gray-300 rounded-t-md p-2" %>
+      <div class="rounded-b-sm border border-t-0 rounded-b-md border-gray-300 bg-gray-100 p-2">
+        <div class="flex justify-between">
+          <div class="flex items-center space-x-2"><%= image_tag current_user.image,class:"w-8 h-8 rounded-full" %>
+            <%= link_to current_user.name, profile_path(current_user.name), class:"text-gray-400 hover:text-gray-800" %></div>
+          <%= f.submit "Update comment",class:"px-4 py-2 bg-blue-500 hover:bg-blue-700 text-white rounded-sm text-xs cursor-pointer" %></div>
+      </div>
+    <% end %>
+  </div>
+</div>

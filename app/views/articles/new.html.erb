@@ -1,0 +1,31 @@
+<div>
+  <div class="max-w-3xl mx-auto px-4 py-8 md:px-0">
+    <% flash.each do |key,value| %>
+      <% if key == 'error' %>
+        <div class="bg-red-100 border-red-500 border text-red-500 px-4 py-2 text-xs"><%= value %></div>
+      <% end %>
+      <% if key == 'notice' %>
+        <div class="bg-green-100 border-green-500 border text-green-500 px-4 py-2 text-xs"><%= value %></div>
+      <% end %>
+    <% end %>
+    <h1>New Article</h1>
+    <div class="mt-4">
+      <%=form_with model:@article, url:articles_path,class:"space-y-4" do|f|%>
+        <%=  f.text_field :title,placeholder:"Title",class:"block w-full border border-gray-300 px-4 py-2 rounded-md" %>
+        <%= f.text_field :description,placeholder:"What's this article about?",class:"block w-full border border-gray-300 px-4 py-2 rounded-md" %>
+        <%= f.text_area :body,placeholder:"Write your article (in markdown)",class:"block w-full border border-gray-300 px-4 py-2 rounded-md" %>
+        <select id="tags_selector" name="article[tags][]" class="w-full block" multiple="multiple">
+          <% @tags.each do |tag| %>
+            <option value="<%= tag.name %>"><%= "#{tag.name} - #{tag.articles.length}" %></option>
+          <% end %>
+        </select>
+        <script>
+          $(document).on('turbolinks:load', function() {
+                $('#tags_selector').select2({tags:true});
+          })
+        </script>
+        <div class="flex justify-end"><%= f.submit "Publish Article", class:'bg-gray-200 hover:bg-gray-400 px-4 py-2 text-center cursor-pointer rounded-md' %></div>
+      <% end %>
+    </div>
+  </div>
+</div>
